@@ -1,46 +1,90 @@
 package edu.innotech;
 
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @Service
-public class UserService {
-    private final UserDao userDao;
+@RequiredArgsConstructor
+public class UserService implements CommandLineRunner {
 
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
+    @Autowired
+    private final JdbcTemplate jdbcTemplate;
+
+    private final UserRepository userRepository;
+
+    public List<User> findUsersByUsername(List<String> usernames) {
+        List<User> users = userRepository.findUsersByUsername(usernames).
+                orElseThrow(EntityNotFoundException::new);
+        return users;
     }
 
-    public void createUser(String username) {
-        userDao.createUser(new User(null, username));
+    public User findUserByUsername(String username) {
+        User user = userRepository.findUserByUsername(username).
+                orElseThrow(EntityNotFoundException::new);
+        return user;
     }
 
-    public void createUsers(List<String> usernames) {
-        userDao.createUsers(usernames);
-    }
+    @Override
+    public void run(String... args) throws Exception {
+        UserJDBCTemplateRepository userJDBCTemplateRepository = new UserJDBCTemplateRepository(jdbcTemplate);
+        // Добавляем одного пользователя
+        userRepository.createUser("Шариков Полиграф Полиграфович");
 
-    public void deleteUser(Long id) {
-        userDao.deleteUser(id);
-    }
+        // Добавляем нескольких пользователей
+        // Добавление нескольких пользователей одним запросом
+        userJDBCTemplateRepository.createUsers(Arrays.asList( "Преображенский Филипп Филлипович",
+                                                              "Борменталь Иван Арнольдович",
+                                                              "Иванова Дарья Петровна",
+                                                              "Бунина Зинаида Прокопьевна",
+                                                              "Швондер - домком",
+                                                              "Вяземская - заведующая культотделом дома",
+                                                              "тов. Пеструхин",
+                                                              "тов. Жаровкин" ));
 
-    public void deleteUserByName(String username) {
-        userDao.deleteUserByName(username);
-    }
+        // Добавление каждого пользователя одним запросом
+        userRepository.createUsers(Arrays.asList( "тов. Ленин",
+                                                  "тов. Сталин",
+                                                  "тов. Зиновьев",
+                                                  "тов. Каменев",
+                                                  "тов. Бухарин - буржуйский прихвостень и перерожденец",
+                                                  "тамбовский Волк тебе товарищ",
+                                                  "тов. Троцкий - нам не товарищ",
+                                                  "тов. Крупская" ));
 
-    public void deleteAllUsers() {
-        userDao.deleteAllUsers();
-    }
+        // Удаляем лодного пользователя по имени из таблицы
+        userRepository.deleteUserByUsername("Шариков Полиграф Полиграфович");
 
-    public User getUser(Long id) {
-        return userDao.getUser(id);
-    }
+        // Удаление нескольких пользователей из таблицы
+        userRepository.deleteUsersByName(Arrays.asList( "Швондер - домком",
+                                                        "Вяземская - заведующая культотделом дома",
+                                                        "тов. Пеструхин",
+                                                        "тов. Жаровкин" ));
 
-    public User getUserByName(String username) {
-        return userDao.getUserByName(username);
-    }
+        // Выбрать одну записи из таблицы пользователей
+        User user = findUserByUsername("тов. Ленин");
+        log.info("Founded item with id: {} and username: {}", user.getId(), user.getUsername());
 
-    public List<User> getAllUsers() {
-        return userDao.getAllUsers();
+        // Выбрать несколько записей одним запросом
+        List<User> users = findUsersByUsername(Arrays.asList( "Преображенский Филипп Филлипович",
+                                                              "Борменталь Иван Арнольдович",
+                                                              "Иванова Дарья Петровна",
+                                                              "Бунина Зинаида Прокопьевна" ));
+        users.stream().forEach(record -> log.info("Founded item with id: {} and username: {}", record.getId(), record.getUsername()));
+
+        // Выбрать все записи из таблицы пользователей
+        userRepository.findAll().stream().forEach(record -> log.info("Founded item with id: {} and username: {}", record.getId(), record.getUsername()));
+
+        // Удаление всех пользователей из таблицы
+        userRepository.deleteAllUsers();
+
     }
 }
