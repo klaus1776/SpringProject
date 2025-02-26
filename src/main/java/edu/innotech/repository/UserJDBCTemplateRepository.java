@@ -1,6 +1,8 @@
-package edu.innotech;
+package edu.innotech.repository;
 
+import edu.innotech.entity.User;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Repository
 public class UserJDBCTemplateRepository {
+    @Autowired
     private final JdbcTemplate jdbcTemplate;
 
     public UserJDBCTemplateRepository(JdbcTemplate jdbcTemplate) {
@@ -19,7 +22,7 @@ public class UserJDBCTemplateRepository {
     }
 
     @Transactional
-    void createUsers(List<String> usernames) {
+    public void createUsers(List<String> usernames) {
         List<User> entities = new ArrayList<>();
 
         for (String username : usernames) {

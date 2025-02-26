@@ -1,4 +1,4 @@
-package edu.innotech;
+package edu.innotech.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

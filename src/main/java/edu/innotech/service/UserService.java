@@ -1,11 +1,12 @@
-package edu.innotech;
+package edu.innotech.service;
 
+import edu.innotech.entity.User;
+import edu.innotech.repository.UserJDBCTemplateRepository;
+import edu.innotech.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -16,9 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService implements CommandLineRunner {
 
-    @Autowired
-    private final JdbcTemplate jdbcTemplate;
-
+    private final UserJDBCTemplateRepository userJDBCTemplateRepository;
     private final UserRepository userRepository;
 
     public List<User> findUsersByUsername(List<String> usernames) {
@@ -35,7 +34,6 @@ public class UserService implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        UserJDBCTemplateRepository userJDBCTemplateRepository = new UserJDBCTemplateRepository(jdbcTemplate);
         // Добавляем одного пользователя
         userRepository.createUser("Шариков Полиграф Полиграфович");
 
