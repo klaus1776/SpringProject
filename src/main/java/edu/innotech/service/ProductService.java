@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//@Slf4j
 @Service
 @RequiredArgsConstructor
-public class ProductService //implements CommandLineRunner
-{
+public class ProductService {
     private final ProductRepository productRepository;
 
     public Product findProductById(Long id) {
@@ -32,18 +30,4 @@ public class ProductService //implements CommandLineRunner
                 orElseThrow(EntityNotFoundException::new);
         return products;
     }
-
-//    @Override
-//    public void run(String... args) throws Exception {
-//
-//        Product productByid = findProductById(37L);
-//        log.info("product: {}", productByid);
-//
-//        Product productByAccount = findProductByAccount("40817810600010000003");
-//        log.info("product: {}", productByAccount);
-//
-//        List<Product> products = findProductsByUserId(102L);
-//        products.forEach(record -> log.info("product: {}", record));
-//        //products.forEach(record -> log.info("Founded products with user_id: {}", record.getUserId()));
-//    }
 }
