@@ -3,19 +3,19 @@ package edu.innotech.entity;
 import com.fasterxml.jackson.annotation.JsonView;
 import edu.innotech.repository.ViewProduct;
 import jakarta.persistence.*;
+//import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//import javax.persistence.*;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
+@Table(name = "pruduct_types")
 @NoArgsConstructor
-public class User {
+public class ProductType {
     @JsonView(ViewProduct.Public.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,17 +23,17 @@ public class User {
     private Long id;
 
     @JsonView(ViewProduct.Public.class)
-    @Column(name = "username")
-    private String username;
+    @Column(name = "product_type_name")
+    private String productTypeName;
 
-    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "productTypeId", fetch = FetchType.EAGER)
     private Set<Product> products;
 
     @Override
     public String toString() {
-        return "User{" +
+        return "PpruductTypes{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", productTypeName='" + productTypeName + '\'' +
                 '}';
     }
 }
