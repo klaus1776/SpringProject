@@ -1,6 +1,6 @@
 package edu.innotech.entity;
 
-import edu.innotech.dto.UserDto;
+import edu.innotech.dto.ProductTypeDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,22 +9,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
+@Table(name = "pruduct_types")
 @NoArgsConstructor
-public class User implements UserDto {
+public class ProductType implements ProductTypeDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "product_type_name")
+    private String productTypeName;
 
     @Override
     public String toString() {
-        return "User{" +
+        return "PpruductTypes{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", productTypeName='" + productTypeName + '\'' +
                 '}';
     }
 }
