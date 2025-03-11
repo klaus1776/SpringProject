@@ -1,9 +1,6 @@
 package edu.innotech.dto;
 
-public interface ProductDto {
-    Long getId();
-    String getAccount();
-    Double getAmount();
-    ProductTypeDto getProductTypeId();
-    UserDto getUserId();
-}
+import edu.innotech.entity.Product;
+import java.util.List;
+
+public record ProductDto(List<Product> products) {}

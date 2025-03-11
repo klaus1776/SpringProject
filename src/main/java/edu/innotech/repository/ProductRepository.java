@@ -16,15 +16,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // Запрос продукта по id
     @EntityGraph(value = "Product.with-product-type")
-    Optional<ProductDto> findProductById(Long id);
+    Optional<Product> findProductById(Long id);
 
     // Запрос продукта по номеру счета
     @EntityGraph(value = "Product.with-product-type")
     @Query(value = "select p from Product p where p.account = :account")
-    Optional<ProductDto> findProductByAccount(@Param("account") String account);
+    Optional<Product> findProductByAccount(@Param("account") String account);
 
     // Запрос продукта по user_id
     @EntityGraph(value = "Product.with-product-type")
     @Query(value = "select p from Product p where p.userId.id = :userId")
-    Optional<List<ProductDto>> findProductsByUserId(@Param("userId") Long userId);
+    Optional<List<Product>> findProductsByUserId(@Param("userId") Long userId);
 }

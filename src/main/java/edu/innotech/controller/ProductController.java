@@ -28,8 +28,8 @@ public class ProductController {
     }
 
     @GetMapping(value = "/user")
-    public List<ProductDto> findProductsByUserId(@RequestParam("id") Long userId) {
-        List<ProductDto> products = productService.findProductsByUserId(userId);
+    public ProductDto findProductsByUserId(@RequestParam("id") Long userId) {
+        ProductDto products = productService.findProductsByUserId(userId);
         return products;
     }
 

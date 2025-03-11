@@ -19,7 +19,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "products")
 @NoArgsConstructor
-public class Product implements ProductDto {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

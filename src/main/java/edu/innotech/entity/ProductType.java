@@ -1,6 +1,5 @@
 package edu.innotech.entity;
 
-import edu.innotech.dto.ProductTypeDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "pruduct_types")
 @NoArgsConstructor
-public class ProductType implements ProductTypeDto {
+public class ProductType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
