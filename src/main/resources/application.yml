@@ -1,7 +1,11 @@
 server:
+  servlet:
+    context-path: "/payments-app"
   port: 8989
 
 spring:
+  application:
+    name: payments-core
   datasource:
     url: jdbc:postgresql://localhost:5432/JAVAPRO_DB
     password: 111
